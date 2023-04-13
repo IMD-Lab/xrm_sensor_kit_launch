@@ -1,0 +1,18 @@
+<launch>
+  <arg name="launch_driver" default="true"/>
+
+  <group>
+    <push-ros-namespace namespace="imu"/>
+
+    <include file="$(find-pkg-share imu_corrector)/launch/imu_corrector.launch.xml">
+      <arg name="input_topic" value="imu_raw"/>
+      <arg name="output_topic" value="imu_data"/>
+      <arg name="param_file" value="$(find-pkg-share individual_params)/config/$(env VEHICLE_ID default)/sample_sensor_kit/imu_corrector.param.yaml"/>
+    </include>
+  </group>
+  <group>
+    <push-ros-namespace namespace="gnss"/>
+    <include file="$(find-pkg-share witmotion_ros)/launch/gnssimu.launch.py">
+  </include>
+  </group>
+</launch>
